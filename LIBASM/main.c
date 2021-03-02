@@ -6,7 +6,7 @@
 /*   By: evila-ro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 20:51:34 by evila-ro          #+#    #+#             */
-/*   Updated: 2020/12/18 21:10:31 by evila-ro         ###   ########.fr       */
+/*   Updated: 2021/03/01 17:33:04 by evila-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,32 @@ static void	break_write(void)
 		printf("\t\tIt's well done! 👍\n");
 	else
 		printf("\t\tYou must improve it. 👎\n");
+	
+	errno = 0;
+	fd = open("wrong", O_WRONLY);
+	r = write(1, NULL, 10);
+	printf("Real: %s\n", strerror(errno));
+	errno = 0;
+	fd = open("wrong", O_WRONLY);
+	m = ft_write(1, NULL, 10);
+	printf("Mine: %s\n", strerror(errno));
+	if (r == m)
+		printf("\t\tIt's well done! 👍\n");
+	else
+		printf("\t\tYou must improve it. 👎\n");
+	
+	errno = 0;
+	fd = open("wrong", O_WRONLY);
+	r = write(1, buf, -42);
+	printf("Real: %s\n", strerror(errno));
+	errno = 0;
+	fd = open("wrong", O_WRONLY);
+	m = ft_write(1, buf, -42);
+	printf("Mine: %s\n", strerror(errno));
+	if (r == m)
+		printf("\t\tIt's well done! 👍\n");
+	else
+		printf("\t\tYou must improve it. 👎\n");
 }
 
 static void	try_read(void)
@@ -148,6 +174,36 @@ static void	break_read(void)
 	int		m;
 	char	buf[11];
 
+	fd = open("wrong", O_WRONLY);
+	r = read(fd, buf, 10);
+	buf[r] = '\0';
+	close(fd);
+	printf("Real: %s\n", strerror(errno));
+	errno = 0;
+	fd = open("wrong", O_WRONLY);
+	m = ft_read(fd, buf, 10);
+	buf[m] = '\0';
+	close(fd);
+	printf("Mine: %s\n", strerror(errno));
+	if (r == m)
+		printf("\t\tIt's well done! 👍\n");
+	else
+		printf("\t\tYou must improve it. 👎\n");
+
+	errno = 0;
+	fd = open("test.txt", O_WRONLY);
+	r = read(fd, buf, 10);
+	printf("Real: %s\n", strerror(errno));
+	errno = 0;
+	fd = open("test.txt", O_WRONLY);
+	m = ft_read(fd, buf, 10);
+	printf("Mine: %s\n", strerror(errno));
+	if (r == m)
+		printf("\t\tIt's well done! 👍\n");
+	else
+		printf("\t\tYou must improve it. 👎\n");
+
+	errno = 0;
 	fd = open("wrong", O_WRONLY);
 	r = read(fd, buf, 10);
 	printf("Real: %s\n", strerror(errno));
@@ -191,11 +247,11 @@ int			main(void)
 	try_write(" \1HELL");
 	try_write("");
 	try_write("%2%");
-	printf("Break the ft_write\n");
+	printf("BREAK THE FT_WRITE\n");
 	break_write();
 	printf("FT_READ:\n");
 	try_read();
-	printf("Break the ft_read\n");
+	printf("BREAK THE FT_READ\n");
 	break_read();
 	return (0);
 }

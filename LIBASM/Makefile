@@ -6,7 +6,7 @@
 #    By: evila-ro <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/17 20:50:12 by evila-ro          #+#    #+#              #
-#    Updated: 2020/12/17 22:31:22 by evila-ro         ###   ########.fr        #
+#    Updated: 2021/02/28 21:45:23 by evila-ro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,12 +39,13 @@ run:		main
 
 clean:
 	rm $(OBJ)
-
+	rm main
 
 fclean:		clean
 	rm $(NAME)
+	rm main
 
-re:			fclean all
+re:			fclean all main
 
 
 .SILENT:	all $(NAME) main .s.o
